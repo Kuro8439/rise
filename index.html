@@ -150,14 +150,28 @@
     vertical-align:middle;
     margin:0 12px 3px;
   }
+  .logo{
+  width:450px;
+  height:750px;
+  flex-shrink:0;
+  animation: logoPulse 4s ease-in-out infinite 2.4s;
+  transform-origin: center;
+}
+
+@keyframes logoPulse{
+  0%, 100%{ transform: scale(1) translateY(0); }
+  50%{ transform: scale(1.03) translateY(-4px); }
+}
+
+
   @keyframes bannerIn{
     from{opacity:0;transform:translateY(18px) scale(.97);}
     to{opacity:1;transform:none;}
   }
 
   @media (max-width:640px){
-    .video-hero{height:64vh;min-height:340px;}
-    .logo{width:min(420px, 80vw);}
+    .video-hero{height:40vh;min-height:220px;}
+    .logo{width:min(400px, 70vw);}
   }
 
   /* ---------- hero ---------- */
@@ -252,16 +266,28 @@
   .perfect-list{
     list-style:none;
     display:flex;
+    overflow:scroll;
+    height: 120px;
     flex-wrap:wrap;
     justify-content:center;
     gap:14px;
     padding:0;
     margin:0;
+
+    &::-webkit-scrollbar {
+    display: none;
   }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
   .perfect-list li{
     padding:12px 26px;
-    border:1px solid var(--hair);
-    border-radius:999px;
+    width: 100%;
+    border:1.3px solid var(--cream);
+    border-radius:12px;
     font-size:13px;
     letter-spacing:1.5px;
     text-transform:uppercase;
@@ -448,15 +474,18 @@
 
 .cont[type="date"]:not(:focus):not(.has-value)::before {
   content: attr(data-placeholder);
-  color: var(--cream-dim);
+  color: rgba(207, 195, 164, 0.45);
   pointer-events: none;
 }
 
 .cont[type="date"] {
   min-width: 0;
+  height: 50px;
+  padding-top: 30px;
+  }
+
   
-}
-  .cont::placeholder{color:var(--cream-dim);}
+  .cont::placeholder{color:rgba(207, 195, 164, 0.45);}
   .cont:focus{border-color:var(--gold);}
 
   /* ---------- footer ---------- */
@@ -842,10 +871,10 @@
 </div>
 
 <div class="contact" id="book">
-    <input type="text" class="cont" placeholder="Full Name:">
-    <input type="email" class="cont" placeholder="Your Email:">
-    <input type="tel" class="cont" placeholder="Phone:">
-    <input type="date" class="cont" data-placeholder="Event Date" placeholder="Event Date" aria-label="Event Date">
+    <input type="text" class="cont" placeholder="Full Name [e.g: John Doe]">
+    <input type="email" class="cont" placeholder="Your Email [e.g: john.doe@example.com]">
+    <input type="tel" class="cont" placeholder="Phone [e.g: 123-456-7890]">
+    <input type="date" class="cont" data-placeholder="Event Date [mm/dd/yyyy]" placeholder="Event Date" aria-label="Event Date">
 </div>
 
 <footer>
