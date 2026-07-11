@@ -10,17 +10,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;1,300;1,400;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0d0b08;
+    --ink:#1d022d;
     --ink-2:#151109;
-    --panel:#1a140c;
-    --panel-2:#231a10;
+    --panel:#180037;
+    --panel-2:#221023;
     --gold:#c9992f;
     --gold-light:#e8cd82;
     --gold-deep:#7a5a1c;
     --cream:#f3e9d2;
     --cream-dim:#cfc3a4;
     --wine:#4a1f1b;
-    --hair:rgba(201,153,47,0.28);
+    --hair:rgb(136, 0, 255);
     --shadow:0 20px 50px -20px rgba(0,0,0,0.7);
   }
 
@@ -267,7 +267,7 @@
     list-style:none;
     display:flex;
     overflow:scroll;
-    height: 120px;
+    height: 150px;
     flex-wrap:wrap;
     justify-content:center;
     gap:14px;
@@ -330,7 +330,7 @@
     border-radius:3px;
     pointer-events:none;
   }
-  .card:hover{border-color:var(--gold);}
+  .card:hover{border:2px solid var(--gold);}
   .card.selected{border-color:var(--gold-light);box-shadow:0 0 0 1px var(--gold-light), var(--shadow);}
 
   .card h3{
@@ -468,6 +468,7 @@
     border-radius:3px;
     width:100%;
   }
+  .cont:hover{border-color:var(--gold);}
   .cont[type="date"]:not(:focus):not(.has-value) {
   color: transparent;
 }
@@ -520,7 +521,7 @@
   #total.pulse{transform:scale(1.08);}
 
   footer button{
-    padding:18px 42px;
+    padding:16px 42px;
     background:var(--gold);
     border:none;
     color:var(--ink);
