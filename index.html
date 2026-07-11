@@ -448,9 +448,14 @@
 .cont[type="date"]:not(:focus):not(.has-value)::before {
   content: attr(data-placeholder);
   color: var(--cream-dim);
+  position: absolute;
+  left: 1.2rem; 
   pointer-events: none;
 }
 
+.cont[type="date"] {
+  position: relative;
+}
   .cont::placeholder{color:var(--cream-dim);}
   .cont:focus{border-color:var(--gold);}
 
@@ -526,7 +531,7 @@
   @media (max-width:640px){
     .features{grid-template-columns:1fr;}
     .contact{grid-template-columns:1fr;}
-    footer{justify-content:center;text-align:center; padding-top: 6px; border-top: 1px solid var(--hair);}
+    footer{justify-content:center;text-align:center; padding-top: 6px; border-top:1px solid var(--hair);}
     footer button{width:100%;}
   }
 
