@@ -365,7 +365,7 @@
     text-align:left;
     background:none;
     border:none;
-    border-top:1px solid var(--hair);
+    border-top:1px solid linear-gradient(to right, rgba(201, 152, 47, 0.728), rgba(191, 47, 201, 0.664));
     color:var(--gold);
     font-family:'Manrope',sans-serif;
     font-size:12px;
@@ -436,7 +436,7 @@
     margin-top:20px;
     padding:13px;
     background:transparent;
-    border:1px solid var(--gold);
+    border:1px solid var(--hair);
     color:var(--gold-light);
     font-family:'Manrope',sans-serif;
     font-size:12px;
@@ -446,8 +446,16 @@
     cursor:pointer;
     transition:all .3s ease;
   }
-  .pick:hover{background:var(--gold);color:var(--ink);}
-  .pick.active{background:var(--gold);color:var(--ink);font-weight:700;}
+ .pick:hover{
+  background: var(--gold) !important;
+  color: var(--ink) !important;
+}
+
+.card.selected .pick {
+  background-color: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+}
 
   /* ---------- contact ---------- */
   .contact{
