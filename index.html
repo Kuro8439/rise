@@ -441,7 +441,7 @@
     font-size:14px;
     border-radius:3px;
   }
-  .cont[type="date"]:not(:focus):not(.has-value) {
+.cont[type="date"]:not(:focus):not(.has-value) {
   color: transparent;
 }
 
@@ -453,9 +453,6 @@
   pointer-events: none;
 }
 
-.cont[type="date"] {
-  position: relative;
-}
   .cont::placeholder{color:var(--cream-dim);}
   .cont:focus{border-color:var(--gold);}
 
@@ -533,6 +530,7 @@
     .contact{grid-template-columns:1fr;}
     footer{justify-content:center;text-align:center; padding-top: 6px; border-top:1px solid var(--hair);}
     footer button{width:100%;}
+    
   }
 
   @media (prefers-reduced-motion:reduce){
