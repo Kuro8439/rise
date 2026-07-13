@@ -10,18 +10,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;1,300;1,400;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1d022d;
+    --ink:#0d0b08;
     --ink-2:#151109;
-    --panel:#180037;
-    --panel-2:#221023;
+    --panel:#1a140c;
+    --panel-2:#231a10;
     --gold:#c9992f;
     --gold-light:#e8cd82;
     --gold-deep:#7a5a1c;
     --cream:#f3e9d2;
     --cream-dim:#cfc3a4;
     --wine:#4a1f1b;
-    --hair:rgb(136, 0, 255);
+    --hair:rgba(201,153,47,0.28);
     --shadow:0 20px 50px -20px rgba(0,0,0,0.7);
+
   }
 
   *{box-sizing:border-box;}
@@ -154,7 +155,7 @@
   width:450px;
   height:750px;
   flex-shrink:0;
-  animation: logoPulse 4s ease-in-out infinite 2.4s;
+  animation: logoPulse 3s ease-in-out infinite 0.5s;
   transform-origin: center;
 }
 
@@ -165,7 +166,7 @@
 
 
   @keyframes bannerIn{
-    from{opacity:0;transform:translateY(18px) scale(.97);}
+    from{opacity:0;transform:translateY(19px) scale(.97);}
     to{opacity:1;transform:none;}
   }
 
@@ -198,7 +199,7 @@
     display:inline-block;
     width:36px;
     height:1px;
-    background:var(--gold);
+    background:linear-gradient(45deg, #c9992f, #a202ff);
     vertical-align:middle;
     margin:0 14px 3px;
   }
@@ -458,7 +459,7 @@
 }
 
   /* ---------- contact ---------- */
-  .contact{
+ .contact{
     max-width:1000px;
     margin:60px auto 0;
     padding:0 clamp(20px,6vw,64px);
@@ -473,25 +474,16 @@
     padding:15px 16px;
     font-family:'Manrope',sans-serif;
     font-size:14px;
-    border-radius:3px;
-    width:100%;
+      border-radius:3px;
   }
   .cont:hover{border-color:var(--gold);}
-  .cont[type="date"]:not(:focus):not(.has-value) {
-  color: transparent;
-}
 
-.cont[type="date"]:not(:focus):not(.has-value)::before {
-  content: attr(data-placeholder);
-  color: rgba(207, 195, 164, 0.45);
-  pointer-events: none;
-}
 
-.cont[type="date"] {
-  min-width: 0;
-  height: 50px;
-  padding-top: 30px;
-  }
+/* Hide the placeholder text when focused or when a valid date is picked */
+.date-placeholder:focus:before,
+
+
+/*.cont[type="date"]
 
   
   .cont::placeholder{color:rgba(207, 195, 164, 0.45);}
@@ -883,7 +875,7 @@
     <input type="text" class="cont" placeholder="Full Name [e.g: John Doe]">
     <input type="email" class="cont" placeholder="Your Email [e.g: john.doe@example.com]">
     <input type="tel" class="cont" placeholder="Phone [e.g: 123-456-7890]">
-    <input type="date" class="cont" data-placeholder="Event Date [mm/dd/yyyy]" placeholder="Event Date" aria-label="Event Date">
+    <input type="text" class="cont" placeholder="Event Date [mm/dd/yyyy]" onfocus="this.type='date'; this.placeholder='';"  onblur="if(!this.value) { this.type='text'; this.placeholder='Event Date [mm/dd/yyyy]'; }"    data-placeholder = "Event Date" aria-label="Event Date">
 </div>
 
 <footer>
