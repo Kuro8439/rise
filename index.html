@@ -22,6 +22,7 @@
     --muted:#64748B;
     --shadow: 0 10px 30px rgba(26,43,76,0.10);
     --shadow-lg: 0 24px 60px rgba(26,43,76,0.16);
+	--smallshadow: 0 4px 12px rgba(26,43,76,0.08);
     --radius: 10px;
   }
 
@@ -307,11 +308,11 @@ background:
   .center{text-align:center;margin-left:auto;margin-right:auto;}
 
   /* ---------- Services ---------- */
-  .services{background:var(--white);}
+  .services{background:var(--cream);}
   .service-grid{
     display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
   }
-  .services{background:var(--white);}
+  .services{background:var(--cream);}
 
 .service-grid{
   display:grid;
@@ -320,14 +321,16 @@ background:
 }
 
 .service-card{
-  background:var(--cream);
-  border:1px solid rgba(197,155,39,0.22);
+  background:var(--white);
+  border:1px solid var(--gold);
   border-radius:var(--radius);
   padding:34px 20px;
+  box-shadow: var(--smallshadow);
   transition:transform .25s, box-shadow .25s, border-color .25s;
 }
 .service-card:hover{
   transform:translateY(-4px);
+  border:1px solid var(--gold);
   box-shadow:var(--shadow);
   border-color:var(--gold);
 }
@@ -446,7 +449,7 @@ background:
   .privacy-note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center;}
 
   /* ---------- Footer ---------- */
-  footer{background:var(--navy);color:rgba(255,255,255,0.85);}
+  footer{background:var(--navy);color:var(--gold-light);}
   .footer-grid{
     max-width:1180px;margin:0 auto;padding:64px 24px 32px;
     display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;
