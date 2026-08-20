@@ -9604,7 +9604,9 @@ z"/>
     "smsmymetropcs.com", "mymetropcs.com"
   ];
 
-  form.addEventListener("submit", function (e) {
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
     status.textContent = "Sending...";
 
@@ -9621,32 +9623,38 @@ z"/>
     const smsMessage = `Tour request: ${form.name.value}, ${form.phone.value}, ${form.inquiry_type.value}`;
     const now = new Date().toLocaleString();
 
-    // 1) Full booking details to your inbox
-    const sendEmail = emailjs.send("service_c757ewd", "template_jrybfrl", {
-      name: form.name.value,
-      time: now,
-      message: bookingMessage
-    });
-
-    // 2) Fan out to every carrier gateway, for both numbers
-    const smsPromises = [];
-    SMS_NUMBERS.forEach(number => {
-      CARRIER_GATEWAYS.forEach(gateway => {
-        smsPromises.push(
-          emailjs.send("service_c757ewd", "template_s4h10vo", {
-            name: form.name.value,
-            time: now,
-            message: smsMessage,
-            to_email: `${number}@${gateway}`
-          })
-        );
+    try {
+      // 1) Full booking details to your inbox
+      await emailjs.send("service_c757ewd", "template_jrybfrl", {
+        name: form.name.value,
+        time: now,
+        message: bookingMessage
       });
-    });
+      await delay(600);
 
-    Promise.allSettled([sendEmail, ...smsPromises]).then(() => {
+      // 2) Fan out to every carrier gateway, one at a time
+      for (const number of SMS_NUMBERS) {
+        for (const gateway of CARRIER_GATEWAYS) {
+          try {
+            await emailjs.send("service_c757ewd", "template_s4h10vo", {
+              name: form.name.value,
+              time: now,
+              message: smsMessage,
+              to_email: `${number}@${gateway}`
+            });
+          } catch (err) {
+            console.warn(`Failed for ${number}@${gateway}`, err);
+          }
+          await delay(600);
+        }
+      }
+
       status.textContent = "Request sent! We'll follow up shortly to confirm.";
       form.reset();
-    });
+    } catch (err) {
+      console.error(err);
+      status.textContent = "Something went wrong. Please call us instead at (916) 370-5842.";
+    }
   });
 </script>
 </body>
