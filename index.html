@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   :root{
     --navy:#1A2B4C;
@@ -9501,7 +9502,7 @@ z"/>
         <h3>Submit Tour Request &amp; Inquire</h3>
         <p class="form-sub">A member of our team will follow up to confirm availability.</p>
 
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="intake-form">
+        <form method="POST" id="intake-form">
           <input type="hidden" name="_subject" value="New Referral / Tour Request from acaringhearthome.com" />
           <input type="hidden" name="_replyto" value="info@acaringhearthome.com" />
 
@@ -9552,8 +9553,9 @@ z"/>
           </div>
 
           <button type="submit" class="submit-btn">Submit Tour Request &amp; Inquire</button>
-          <p class="privacy-note">This form is for initial contact only. No assessment or payment information is collected online.</p>
-        </form>
+		   <p id="status" class="privacy-note"></p>
+			<p class="privacy-note">This form is for initial contact only. No assessment or payment information is collected online.</p>
+		</form>
       </div>
     </div>
   </div>
@@ -9589,6 +9591,64 @@ z"/>
     Licensed Boarding Home operating in compliance with local residential support regulations and the Texas Health and Human Services Commission standards.
   </div>
 </footer>
+<script>
+  emailjs.init({ publicKey: "BVHe_CKIUzTAwlzxd" });
 
+  const form = document.getElementById("intake-form");
+  const status = document.getElementById("status");
+
+  const SMS_NUMBERS = ["9163705842", "3469004168"];
+  const CARRIER_GATEWAYS = [
+    "vtext.com", "txt.att.net", "tmomail.net",
+    "messaging.sprintpcs.com", "myboostmobile.com",
+    "smsmymetropcs.com", "mymetropcs.com"
+  ];
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    status.textContent = "Sending...";
+
+    const bookingMessage =
+      `New tour request\n` +
+      `Name: ${form.name.value}\n` +
+      `Phone: ${form.phone.value}\n` +
+      `Email: ${form.email.value}\n` +
+      `Role: ${form.user_role.value}\n` +
+      `Inquiry: ${form.inquiry_type.value}\n` +
+      `Preferred Date: ${form.preferred_date.value}\n` +
+      `Notes: ${form.notes.value}`;
+
+    const smsMessage = `Tour request: ${form.name.value}, ${form.phone.value}, ${form.inquiry_type.value}`;
+    const now = new Date().toLocaleString();
+
+    // 1) Full booking details to your inbox
+    const sendEmail = emailjs.send("service_c757ewd", "template_jrybfrl", {
+      name: form.name.value,
+      time: now,
+      message: bookingMessage
+    });
+
+    // 2) Fan out to every carrier gateway, for both numbers
+    const smsPromises = [];
+    SMS_NUMBERS.forEach(number => {
+      CARRIER_GATEWAYS.forEach(gateway => {
+        smsPromises.push(
+          emailjs.send("service_c757ewd", "template_s4h10vo", {
+            name: form.name.value,
+            time: now,
+            message: smsMessage,
+            to_email: `${number}@${gateway}`
+          })
+        );
+      });
+    });
+
+    Promise.allSettled([sendEmail, ...smsPromises]).then(() => {
+      status.textContent = "Request sent! We'll follow up shortly to confirm.";
+      form.reset();
+    });
+  });
+</script>
 </body>
 </html>
+
