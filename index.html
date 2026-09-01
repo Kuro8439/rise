@@ -9597,57 +9597,34 @@ z"/>
   const form = document.getElementById("intake-form");
   const status = document.getElementById("status");
 
-  const SMS_NUMBERS = ["9163705842", "3469004168"];
-  const CARRIER_GATEWAYS = [
-    "vtext.com", "txt.att.net", "tmomail.net",
-    "messaging.sprintpcs.com", "myboostmobile.com",
-    "smsmymetropcs.com", "mymetropcs.com"
-  ];
-
-  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     status.textContent = "Sending...";
 
-    const bookingMessage =
-      `New tour request\n` +
-      `Name: ${form.name.value}\n` +
-      `Phone: ${form.phone.value}\n` +
-      `Email: ${form.email.value}\n` +
-      `Role: ${form.user_role.value}\n` +
-      `Inquiry: ${form.inquiry_type.value}\n` +
-      `Preferred Date: ${form.preferred_date.value}\n` +
-      `Notes: ${form.notes.value}`;
-
-    const smsMessage = `Tour request: ${form.name.value}, ${form.phone.value}, ${form.inquiry_type.value}`;
     const now = new Date().toLocaleString();
 
-    try {
-      // 1) Full booking details to your inbox
-      await emailjs.send("service_c757ewd", "template_jrybfrl", {
-        name: form.name.value,
-        time: now,
-        message: bookingMessage
-      });
-      await delay(600);
+    // Full message for your real inbox
+    const fullMessage =
+      `Role: ${form.user_role.value}\n` +
+      `Inquiry Type: ${form.inquiry_type.value}\n` +
+      `Preferred Date: ${form.preferred_date.value}\n` +
+      `Notes: ${form.notes.value || "(none)"}`;
 
-      // 2) Fan out to every carrier gateway, one at a time
-      for (const number of SMS_NUMBERS) {
-        for (const gateway of CARRIER_GATEWAYS) {
-          try {
-            await emailjs.send("service_c757ewd", "template_s4h10vo", {
-              name: form.name.value,
-              time: now,
-              message: smsMessage,
-              to_email: `${number}@${gateway}`
-            });
-          } catch (err) {
-            console.warn(`Failed for ${number}@${gateway}`, err);
-          }
-          await delay(600);
-        }
-      }
+    // Short message for SMS gateway (140-160 char limit)
+    const shortMessage =
+      `Tour request - ${form.name.value}, ${form.phone.value}, ` +
+      `${form.inquiry_type.value}, pref: ${form.preferred_date.value}`;
+
+    try {
+      // 1. Primary notification email — goes to your real inbox
+      await emailjs.send("service_c757ewd", "template_jrybfrl", {
+        to_email: "info@acaringhearthome.com",
+        name: form.name.value,
+        email: form.email.value,
+        time: now,
+        message: fullMessage
+      });
+
 
       status.textContent = "Request sent! We'll follow up shortly to confirm.";
       form.reset();
