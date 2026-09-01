@@ -9605,9 +9605,11 @@ z"/>
 
     // Full message for your real inbox
     const fullMessage =
+      `Phone: ${form.phone.value}\n` +
+      `Email: ${form.email.value}\n` +
       `Role: ${form.user_role.value}\n` +
       `Inquiry Type: ${form.inquiry_type.value}\n` +
-      `Preferred Date: ${form.preferred_date.value}\n` +
+      `Preferred Date: ${form.preferred_date.value || "(not specified)"}\n` +
       `Notes: ${form.notes.value || "(none)"}`;
 
     // Short message for SMS gateway (140-160 char limit)
@@ -9625,6 +9627,11 @@ z"/>
         message: fullMessage
       });
 
+      // 2. Optional: SMS gateway test send (currently pointed at a dead gateway — see notes)
+      // await emailjs.send("service_c757ewd", "template_s4h10vo", {
+      //   to_email: "9166210451@tmomail.net",
+      //   message: shortMessage
+      // });
 
       status.textContent = "Request sent! We'll follow up shortly to confirm.";
       form.reset();
@@ -9634,6 +9641,7 @@ z"/>
     }
   });
 </script>
+
 </body>
 </html>
 
